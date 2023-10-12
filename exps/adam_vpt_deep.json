@@ -1,6 +1,6 @@
 {
     "prefix": " ",
-    "dataset": "cifar224",
+    "dataset": "omnibenchmark",
     "memory_size": 0,
     "memory_per_class": 0,
     "fixed_memory": false,
