@@ -65,32 +65,29 @@ class iCIFAR100(iData):
             test_dataset.targets
         )
 
-
-def build_transform(is_train, args):
-    input_size = 224
-    resize_im = input_size > 32
+def build_transform(is_train, input_size=224):
     if is_train:
-        scale = (0.05, 1.0)
-        ratio = (3. / 4., 4. / 3.)
-        
+        # Augmentations for training
         transform = [
-            transforms.RandomResizedCrop(input_size, scale=scale, ratio=ratio),
-            transforms.RandomHorizontalFlip(p=0.5),
+            transforms.RandomResizedCrop(input_size, scale=(0.7, 1.0), ratio=(3./4., 4./3.)),
+            transforms.RandomHorizontalFlip(),
+            transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2),
+            transforms.RandomRotation(degrees=15),
+            transforms.RandomAffine(degrees=0, translate=(0.1, 0.1), scale=(0.9, 1.1), shear=0.1),
+            transforms.RandomPerspective(distortion_scale=0.5, p=0.5),
+            transforms.ToTensor(),
+            transforms.RandomErasing(p=0.5, scale=(0.02, 0.2), ratio=(0.3, 3.3)),
+        ]
+    else:
+        # Augmentations for testing/validation
+        transform = [
+            transforms.Resize(int((256 / 224) * input_size)),
+            transforms.CenterCrop(input_size),
             transforms.ToTensor(),
         ]
-        return transform
 
-    t = []
-    if resize_im:
-        size = int((256 / 224) * input_size)
-        t.append(
-            transforms.Resize(size, interpolation=3),  # to maintain same ratio w.r.t. 224 images
-        )
-        t.append(transforms.CenterCrop(input_size))
-    t.append(transforms.ToTensor())
-    
-    # return transforms.Compose(t)
-    return t
+    return transform
+
 
 class iCIFAR224(iData):
     use_path = False
