@@ -66,6 +66,7 @@ class iCIFAR100(iData):
         )
 
 def build_transform(is_train, input_size):
+    input_size=224
     if is_train:
         # Augmentations for training
         transform = [
