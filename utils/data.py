@@ -65,7 +65,7 @@ class iCIFAR100(iData):
             test_dataset.targets
         )
 
-def build_transform(is_train, input_size=224):
+def build_transform(is_train, input_size):
     if is_train:
         # Augmentations for training
         transform = [
