@@ -73,11 +73,16 @@ def build_transform(is_train, args):
         ratio = (3. / 4., 4. / 3.)
         
         transform = [
-            transforms.RandomResizedCrop(input_size, scale=scale, ratio=ratio),
-            transforms.RandomHorizontalFlip(p=0.5),
+            transforms.RandomResizedCrop(input_size, scale=(0.8, 1.0)),
+            transforms.RandomHorizontalFlip(),
+            transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2),
+            transforms.RandomRotation(degrees=15),
+            transforms.RandomVerticalFlip(),
             transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]
-        return transform
+        return transforms.Compose(transform)
+
 
     t = []
     if resize_im:
