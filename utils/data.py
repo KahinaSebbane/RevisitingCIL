@@ -65,7 +65,7 @@ class iCIFAR100(iData):
             test_dataset.targets
         )
 
-build_transform(is_train, args):
+def build_transform(is_train, args):
     input_size = 224
     resize_im = input_size > 32
     if is_train:
@@ -78,7 +78,6 @@ build_transform(is_train, args):
             transforms.ToTensor(),
         ]
         return transform
-
 
     t = []
     if resize_im:
