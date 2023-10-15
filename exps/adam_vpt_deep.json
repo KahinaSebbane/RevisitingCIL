@@ -13,8 +13,8 @@
     "seed": [1993],
     
     "tuned_epoch":20,
-    "init_lr":0.001,
-    "batch_size":48,
+    "init_lr":0.01,
+    "batch_size":64,
     "weight_decay":0.0005,
     "min_lr":0,
     "optimizer":"sgd",
